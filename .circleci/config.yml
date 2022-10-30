@@ -1,5 +1,17 @@
 version: 2.1
 jobs:
+  print-hello:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: echo "system print hello"
+
+  print-world:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: echo "system print world"
+
   build-and-test:
     docker:
       - image: cimg/openjdk:11.0
@@ -11,6 +23,7 @@ jobs:
       - run:
           name: Print
           command: echo "World"
+
       - run:
           name: Build
           command: mvn -B -DskipTests clean package
@@ -21,4 +34,8 @@ jobs:
 workflows:
   welcome:
     jobs:
+      - print-hello
+      - print-world:
+          requires:
+            - print-hello
       - build-and-test
