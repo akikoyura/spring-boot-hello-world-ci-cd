@@ -12,6 +12,16 @@ jobs:
     steps:
       - run: echo "system print world"
 
+  echo-environment:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run:
+          name: "set and echo"
+          command: |
+            HoangMH1="Skyforce"
+            echo $HoangMH1
+
   build-and-test:
     docker:
       - image: cimg/openjdk:11.0
@@ -38,4 +48,5 @@ workflows:
       - print-world:
           requires:
             - print-hello
+      - echo-environment
       - build-and-test
